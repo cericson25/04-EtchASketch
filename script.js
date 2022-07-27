@@ -1,6 +1,8 @@
 const gridContainer = document.querySelector(".grid-container");
-const resizeButton = document.querySelector(".resize-button");
+const resizeButton = document.querySelector(".resize");
+const colorButton = document.querySelector(".color");
 let baseGridSize = 16; //default starting grid size (current: 16x16px)
+let color = "#505050";
 let cells = [];
 
 createGrid(baseGridSize);
@@ -29,7 +31,11 @@ function createGrid(inputGridSize) {
 function eventListener() {
   cells.forEach((cell) => {
     cell.addEventListener("mouseover", () => {
-      cell.style.backgroundColor = "#505050";
+      if ((colorMode = 1)) {
+        cell.style.backgroundColor = "#505050";
+      } else if ((colorMode = 2)) {
+        cell.style.backgroundColor = "";
+      }
     });
   });
 }
