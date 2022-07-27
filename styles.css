@@ -1,0 +1,32 @@
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #a4a4a4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-content {
+  display: flex;
+}
+
+.grid-container {
+  height: 400px;
+  width: 400px;
+  flex: 0 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  background-color: #ffffff;
+}
+
+.resize-button {
+}
