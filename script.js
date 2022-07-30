@@ -1,13 +1,20 @@
 const gridContainer = document.querySelector(".grid-container");
 const resizeButton = document.querySelector(".resize");
 const colorButton = document.querySelector(".color");
-let baseGridSize = 16; //default starting grid size (current: 16x16px)
-let color = "#505050";
+const clearButton = document.querySelector(".clear");
+let inputGridSize = 16; //default starting grid size (current: 16x16px)
+let colorMode = 1;
 let cells = [];
 
-createGrid(baseGridSize);
+createGrid(inputGridSize);
 
 resizeButton.addEventListener("click", resizeGrid);
+colorButton.addEventListener("click", changeColorMode);
+clearButton.addEventListener("click", () => {
+  cells.forEach((cell) => {
+    cell.style.backgroundColor = "#ffffff";
+  });
+});
 
 function createGrid(inputGridSize) {
   for (let row = 0; row < inputGridSize; row++) {
@@ -25,31 +32,46 @@ function createGrid(inputGridSize) {
     }
     gridContainer.appendChild(newRow);
   }
-  eventListener();
+  sketchEventListener();
 }
 
-function eventListener() {
+function sketchEventListener() {
+  //creates an event listener for each grid tile
   cells.forEach((cell) => {
     cell.addEventListener("mouseover", () => {
-      if ((colorMode = 1)) {
-        cell.style.backgroundColor = "#505050";
-      } else if ((colorMode = 2)) {
-        cell.style.backgroundColor = "";
-      }
+      cell.style.backgroundColor = colorLogic(colorMode);
     });
   });
 }
 
 function resizeGrid() {
-  gridInput = prompt("Grid Dimensions: (Max of 100px)");
-  if (gridInput <= 100) {
-    removeExistingGrid(gridContainer);
-    createGrid(gridInput);
+  //removes original grid, and creates a new one with inputed dimensions
+  inputGridSize = prompt("Grid Dimensions: (Max of 100px)");
+  console.log(inputGridSize);
+  if (inputGridSize === null) {
+  } else if (inputGridSize <= 100) {
+    while (gridContainer.firstChild) {
+      //removes existing grid
+      gridContainer.removeChild(gridContainer.lastChild);
+    }
+    createGrid(inputGridSize);
+  } else {
+    alert("Invalid Input");
   }
 }
 
-function removeExistingGrid(parent) {
-  while (parent.firstChild) {
-    parent.removeChild(parent.lastChild);
+function changeColorMode() {
+  if (colorMode === 1) {
+    colorMode++;
+  } else {
+    colorMode = 1;
+  }
+}
+
+function colorLogic() {
+  if (colorMode === 1) {
+    return "#505050";
+  } else {
+    return "#" + Math.floor(Math.random() * 16777215).toString(16);
   }
 }
