@@ -31,7 +31,7 @@ body {
 
 .title {
   font-family: RobotoBold Arial, Helvetica, sans-serif;
-  color: #303030;
+  color: #111111;
   font-size: 65px;
   text-align: center;
   margin: 0;
@@ -49,26 +49,30 @@ body {
 
 .cell {
   background-color: #ffffff;
+  user-select: none;
 }
 
 .button-container {
   display: flex;
   gap: 16px;
+  width: 400px;
+  height: 100px;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
 }
 
 .button {
   font-family: Roboto Arial, Helvetica, sans-serif;
   height: 35px;
   width: 125px;
-  background-color: #ffffff;
   color: #202020;
   border-radius: 5px;
   border: 0;
   box-shadow: 0 0 10px;
+  flex: 1;
 }
 
 button:hover {
-  background-color: #e0e0e0;
   cursor: pointer;
 }
 

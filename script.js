@@ -2,9 +2,14 @@ const gridContainer = document.querySelector(".grid-container");
 const resizeButton = document.querySelector(".resize");
 const colorButton = document.querySelector(".color");
 const clearButton = document.querySelector(".clear");
+const eraseButton = document.querySelector(".erase");
 let inputGridSize = 16; //default starting grid size (current: 16x16px)
 let colorMode = 1;
 let cells = [];
+
+let mouseDown = false;
+document.body.onmousedown = () => (mouseDown = true);
+document.body.onmouseup = () => (mouseDown = false);
 
 createGrid(inputGridSize);
 
@@ -15,6 +20,8 @@ clearButton.addEventListener("click", () => {
     cell.style.backgroundColor = "#ffffff";
   });
 });
+
+eraseButton.addEventListener("click", () => (colorMode = 3));
 
 function createGrid(inputGridSize) {
   for (let row = 0; row < inputGridSize; row++) {
@@ -27,21 +34,25 @@ function createGrid(inputGridSize) {
       newCell.style.height = 400 / inputGridSize + "px";
       newCell.style.width = 400 / inputGridSize + "px";
       newCell.classList.add("cell");
+      newCell.addEventListener("mouseover", changeCellColor);
+      newCell.addEventListener("mousedown", changeCellColor);
       newRow.appendChild(newCell);
       cells.push(newCell);
     }
     gridContainer.appendChild(newRow);
   }
-  sketchEventListener();
 }
 
-function sketchEventListener() {
-  //creates an event listener for each grid tile
-  cells.forEach((cell) => {
-    cell.addEventListener("mouseover", () => {
-      cell.style.backgroundColor = colorLogic(colorMode);
-    });
-  });
+function changeCellColor(e) {
+  if (e.type === "mouseover" && !mouseDown) return;
+  if (colorMode === 1) {
+    e.target.style.backgroundColor = "#505050";
+  } else if (colorMode === 2) {
+    e.target.style.backgroundColor =
+      "#" + Math.floor(Math.random() * 16777215).toString(16);
+  } else {
+    e.target.style.backgroundColor = "#ffffff";
+  }
 }
 
 function resizeGrid() {
@@ -61,17 +72,9 @@ function resizeGrid() {
 }
 
 function changeColorMode() {
-  if (colorMode === 1) {
+  if (colorMode !== 3) {
     colorMode++;
   } else {
     colorMode = 1;
-  }
-}
-
-function colorLogic() {
-  if (colorMode === 1) {
-    return "#505050";
-  } else {
-    return "#" + Math.floor(Math.random() * 16777215).toString(16);
   }
 }
