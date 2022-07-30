@@ -64,6 +64,7 @@ body {
   color: #202020;
   border-radius: 5px;
   border: 0;
+  box-shadow: 0 0 10px;
 }
 
 button:hover {
