@@ -50,30 +50,39 @@ body {
 .cell {
   background-color: #ffffff;
   user-select: none;
+  box-sizing: border-box;
+}
+
+.grid {
+  border: 1px solid #000000;
 }
 
 .button-container {
   display: flex;
   gap: 16px;
   width: 400px;
-  height: 100px;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   flex-wrap: wrap;
 }
 
 .button {
   font-family: Roboto Arial, Helvetica, sans-serif;
   height: 35px;
-  width: 125px;
+  width: 100px;
   color: #202020;
   border-radius: 5px;
   border: 0;
   box-shadow: 0 0 10px;
-  flex: 1;
+  flex: 1 1 auto;
 }
 
 button:hover {
   cursor: pointer;
+}
+
+.active {
+  background-color: #111111;
+  color: #e0e0e0;
 }
 
 footer {

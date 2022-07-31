@@ -1,27 +1,49 @@
 const gridContainer = document.querySelector(".grid-container");
-const resizeButton = document.querySelector(".resize");
-const colorButton = document.querySelector(".color");
-const clearButton = document.querySelector(".clear");
+
+const drawButton = document.querySelector(".draw");
+const rainbowButton = document.querySelector(".rainbow");
 const eraseButton = document.querySelector(".erase");
-let inputGridSize = 16; //default starting grid size (current: 16x16px)
+const gridButton = document.querySelector(".grid");
+const resizeButton = document.querySelector(".resize");
+const clearButton = document.querySelector(".clear");
+
+let DEFAULT_GRID_SIZE = 16; //default starting grid size (current: 16x16px)
 let colorMode = 1;
 let cells = [];
-
+let buttons = [drawButton, rainbowButton, eraseButton];
 let mouseDown = false;
 document.body.onmousedown = () => (mouseDown = true);
 document.body.onmouseup = () => (mouseDown = false);
 
-createGrid(inputGridSize);
+drawButton.addEventListener("click", () => {
+  colorMode = 1;
+});
+
+rainbowButton.addEventListener("click", () => (colorMode = 2));
+eraseButton.addEventListener("click", () => (colorMode = 3));
+gridButton.addEventListener("click", () => {
+  cells.forEach((cell) => {
+    cell.classList.toggle("grid");
+  });
+});
 
 resizeButton.addEventListener("click", resizeGrid);
-colorButton.addEventListener("click", changeColorMode);
 clearButton.addEventListener("click", () => {
   cells.forEach((cell) => {
     cell.style.backgroundColor = "#ffffff";
   });
 });
 
-eraseButton.addEventListener("click", () => (colorMode = 3));
+buttons.forEach((button) => {
+  button.addEventListener("click", activeButton);
+});
+
+function activeButton(e) {
+  buttons.forEach((button) => {
+    button.classList.remove("active");
+  });
+  e.target.classList.add("active");
+}
 
 function createGrid(inputGridSize) {
   for (let row = 0; row < inputGridSize; row++) {
@@ -57,7 +79,7 @@ function changeCellColor(e) {
 
 function resizeGrid() {
   //removes original grid, and creates a new one with inputed dimensions
-  inputGridSize = prompt("Grid Dimensions: (Max of 100px)");
+  let inputGridSize = prompt("Grid Dimensions: (Max of 100px)");
   console.log(inputGridSize);
   if (inputGridSize === null) {
   } else if (inputGridSize <= 100) {
@@ -71,10 +93,6 @@ function resizeGrid() {
   }
 }
 
-function changeColorMode() {
-  if (colorMode !== 3) {
-    colorMode++;
-  } else {
-    colorMode = 1;
-  }
-}
+window.onload = () => {
+  createGrid(DEFAULT_GRID_SIZE);
+};
